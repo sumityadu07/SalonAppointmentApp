@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalonAppointmentApp.Pages.ExplorePage"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:fontawesome="clr-namespace:FontAwesome"
+             xmlns:ffimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:salon="clr-namespace:SalonAppointmentApp.Models.Salon"
+             xmlns:pages="clr-namespace:SalonAppointmentApp.Pages"
+             x:DataType="pages:ExplorePageModel">
+    <NavigationPage.TitleView>
+        <Label Text="Explore"
+               Style="{StaticResource titletext}"/>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout>
+            <CollectionView ItemsSource="{Binding Posts}">
+                <CollectionView.Header>
+                    <CollectionView HeightRequest="100">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Padding="2">
+                                    <Frame>
+                                        <StackLayout>
+                                            <ffimg:CachedImage Source="home"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="5,15"
+                                     x:DataType="salon:Post">
+                            <Frame Margin="5"
+                                   CornerRadius="4"
+                                   Padding="0">
+                                <StackLayout 
+                                             Spacing="0">
+                                    <Frame Padding="14">
+                                        <Label Text="{Binding Title}"
+                                               Style="{StaticResource subTitle}"/>
+                                    </Frame>
+                                    <ffimg:CachedImage Source="{Binding Imgurl}"
+                                                       Style="{StaticResource cacheimage}"
+                                                       HeightRequest="400"
+                                                       Aspect="AspectFill"/>
+                                    <xct:Expander ExpandAnimationLength="10"
+                                                  CollapseAnimationLength="10"
+                                                  Padding="15,5,15,15">
+                                        <xct:Expander.Content>
+                                            <Label Text="{Binding Description} "
+                                                   Style="{StaticResource caption}"/>
+                                        </xct:Expander.Content>
+                                        <xct:Expander.Header>
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <FormattedString.Spans>
+                                                            <Span Text="{Binding Description}"
+                                                                  Style="{StaticResource caption}"/>
+                                                            <Span Text=" "/>
+                                                            <Span Text="Read More..."
+                                                                  Style="{StaticResource caption}"
+                                                                  TextColor="Gray"/>
+                                                        </FormattedString.Spans>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </xct:Expander.Header>
+                                    </xct:Expander>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

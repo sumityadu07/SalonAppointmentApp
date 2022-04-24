@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="SalonAppointmentApp.Pages.AccountPage"
+			 xmlns:customEditor="clr-namespace:SalonAppointmentApp"
+             xmlns:viewmodel="clr-namespace:SalonAppointmentApp.Pages"
+             x:DataType="viewmodel:AccountPageModel"
+			 xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+    <Shell.TitleView>
+        <Label Text="Edit Profile"
+				Style="{StaticResource title}"/>
+    </Shell.TitleView>
+    <ScrollView>
+		<Grid>
+            <StackLayout Spacing="30"
+						BackgroundColor="Transparent"
+						HorizontalOptions="Center"
+						Padding="10">
+                <!--Phone-->
+					<Frame Padding="5"
+						   BackgroundColor="WhiteSmoke"
+						   HasShadow="False">
+						<StackLayout Orientation="Horizontal"
+									 Padding="10,0">
+                            <Label Text="{Binding User.Name}"
+								   FontFamily="NSB"
+								   TextColor="{StaticResource Primary}"
+								   VerticalTextAlignment="Center"/>
+							<Button Text="CHANGE"
+									Command="{Binding OpenTabCommand}"
+									FontFamily="NB"
+									TextColor="#ca1f14"
+									HorizontalOptions="EndAndExpand"
+									BackgroundColor="Transparent"/>
+						</StackLayout>
+					</Frame>
+                
+				<!--Editor-->
+				<StackLayout Spacing="10"
+							 BackgroundColor="Transparent">
+					<StackLayout.Resources>
+						<Style TargetType="Frame" ApplyToDerivedTypes="True">
+							<Setter Property="CornerRadius" Value="14"/>
+							<Setter Property="BorderColor" Value="Silver"/>
+							<Setter Property="Padding" Value="0"/>
+							<Setter Property="HasShadow" Value="False"/>
+						</Style>
+						<Style TargetType="Editor" ApplyToDerivedTypes="True">
+							<Setter Property="FontFamily" Value="NR"/>
+							<Setter Property="FontSize" Value="15"/>
+							<Setter Property="Margin" Value="10,2"/>
+							<Setter Property="TextColor" Value="Black"/>
+						</Style>
+					</StackLayout.Resources>
+
+					<Label Text="Name"/>
+                    <Frame>
+                        <customEditor:CustomEditor Text="{Binding User.Name}"/>
+                    </Frame>
+                    <Frame>
+                        <customEditor:CustomEditor Text="{Binding User.Gender}"
+                                                   TextColor="{StaticResource Secondary}"
+                                                   Placeholder="Male/Female"
+                                                   PlaceholderColor="{StaticResource Additional2}"/>
+                    </Frame>
+                    <Label Text="Email"/>
+					<StackLayout>
+
+						<Frame>
+                            <customEditor:CustomEditor Text="{Binding User.Email}"/>
+
+                        </Frame>
+						<!--<Button BackgroundColor="Transparent"
+									Text="Verify"
+									FontFamily="NL"
+									Command="{Binding AddMailCommand}"
+								TextColor="#1DA1F2"
+								HorizontalOptions="StartAndExpand"
+								Margin="-8,0"/>-->
+					</StackLayout>
+					<!--Button-->
+					<Grid>
+						<Button Text="Save"
+								Command="{Binding SaveCommand}"
+								WidthRequest="100"
+								TextColor="{StaticResource Secondary}"/>
+						<Frame WidthRequest="100"
+							   BackgroundColor="{StaticResource Primary}"
+							   CornerRadius="8"
+							   IsVisible="{Binding IsBusy}">
+							<ActivityIndicator IsRunning="True"
+											   Color="{StaticResource Secondary}"
+											   HeightRequest="20"
+											   Margin="10"/>
+						</Frame>
+					</Grid>
+				</StackLayout>
+			</StackLayout>
+			<ActivityIndicator Style="{StaticResource indicator}"
+                               IsRunning="{Binding IsBusy}"/>
+           <!--Phone Update-->
+			<Frame IsVisible="{Binding IsAUpdate}"
+                   VerticalOptions="End"
+                   CornerRadius="10">
+                <StackLayout WidthRequest="250"
+							 HorizontalOptions="CenterAndExpand"
+							 VerticalOptions="CenterAndExpand">
+                    <Grid>
+						<StackLayout>
+							<Frame Padding="0"
+									CornerRadius="8">
+								<StackLayout Orientation="Horizontal"
+											Spacing="0">
+									<Image Source="icons8india96"
+											HeightRequest="30"
+											Margin="8,0,-4,0"/>
+									<Label Text="+91"
+											TextColor="Black"
+											FontSize="18"
+											Padding="8,0,4,0"
+											HorizontalOptions="Center"
+											VerticalOptions="Center"/>
+									<customEditor:CustomEntry Placeholder="Phone"
+													Text="{Binding NewPhone}"/>
+								</StackLayout>
+							</Frame>
+						</StackLayout>
+
+						<Frame BackgroundColor="White"
+								Padding="0"
+								IsVisible="{Binding CodeSent}"
+								HorizontalOptions="FillAndExpand"
+								CornerRadius="8">
+
+							<customEditor:CustomEntry Placeholder="OTP"
+									HorizontalTextAlignment="Center"
+									Text="{Binding Code}"/>
+
+						</Frame>
+					</Grid>
+					<Grid>
+						<Button Text="{Binding ButtonText}"
+									Command="{Binding UpdateCommand}"
+									WidthRequest="100"
+									TextColor="White"/>
+						<Frame WidthRequest="100"
+								   BackgroundColor="#6422b8"
+								   CornerRadius="8"
+								   IsVisible="{Binding IsBusy}">
+							<ActivityIndicator IsRunning="True"
+												Color="white"
+												HeightRequest="20"
+												Margin="-10"/>
+						</Frame>
+
+					</Grid>
+					<Button Text="Back"
+							TextColor="#1DA1F2"
+							BackgroundColor="Transparent"
+							HorizontalOptions="CenterAndExpand"
+							Padding="10"
+							Command="{Binding CloseTabCommand}"/>
+
+				</StackLayout>
+
+			</Frame>
+		</Grid>
+	</ScrollView>
+</ContentPage>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="SalonAppointmentApp.Pages.SearchPage"
+             xmlns:controls="clr-namespace:SalonAppointmentApp.Controls"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:salon="clr-namespace:SalonAppointmentApp.Models.Salon">
+    <ContentPage.Content>
+        <StackLayout>
+            <pancakeview:PancakeView CornerRadius="10"
+                                     BackgroundColor="{StaticResource SubSecondary}"
+                                     Margin="10,2"
+                                     HeightRequest="40"
+                                     VerticalOptions="StartAndExpand">
+                <SearchBar Placeholder="Search Items &#x26; or Services"
+                           PlaceholderColor="{StaticResource Additional2}"
+                           CancelButtonColor="{StaticResource Secondary}"
+                           FontFamily="OR"
+                           FontSize="Body"
+                           IsSpellCheckEnabled="True"
+                           MaxLength="20"
+                           TextColor="{StaticResource Secondary}"
+                           TextChanged="SearchBar_TextChanged"
+                           x:Name="SearchContent">
+                </SearchBar>
+            </pancakeview:PancakeView>
+            <CollectionView x:Name="ItemsList"
+                            SelectionChanged="ItemList_ItemTapped">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding Id}"
+                               x:DataType="salon:Appointment"/>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

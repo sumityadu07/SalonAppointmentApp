@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+			 xmlns:viewmodel="clr-namespace:SalonAppointmentApp.Pages"
+             xmlns:awesome="clr-namespace:FontAwesome"
+             xmlns:category="clr-namespace:SalonAppointmentApp.Models.Salon"
+			 x:Class="SalonAppointmentApp.Pages.MainPage"
+             xmlns:ffimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:marketing="clr-namespace:SalonAppointmentApp.Models.Marketing">
+    <NavigationPage.TitleView>
+        <Label Text="Swibbl"
+               Style="{StaticResource titletext}"
+               />
+    </NavigationPage.TitleView>
+
+    <Grid xct:StateLayout.AnimateStateChanges="True"
+          xct:StateLayout.CurrentState="{Binding State}"
+          xct:StateLayout.CurrentCustomStateKey="{Binding CustomState}"
+          x:DataType="viewmodel:MainPageModel">
+
+        <xct:StateLayout.StateViews>
+            <xct:StateView StateKey="Loading"
+                           Template="{StaticResource loading_state}"/>
+            <xct:StateView StateKey="Error"
+                           Template="{StaticResource error_state}"/>
+        </xct:StateLayout.StateViews>
+        <RefreshView IsRefreshing="{Binding IsBusy}"
+                     Command="{Binding RefreshCommand}">
+        <StackLayout>
+                <CollectionView ItemsSource="{Binding CarouselAds}"
+						        ItemSizingStrategy="MeasureAllItems"
+                                Margin="0"
+                                Grid.Row="1">
+                    <CollectionView.Header>
+                        <StackLayout>
+                            <Frame CornerRadius="5"
+                                   BorderColor="{StaticResource Additional2}"
+                                   Margin="10,0,10,20"
+                                   Padding="8"
+                                   HasShadow="False"
+                                   VerticalOptions="StartAndExpand"
+                                   HeightRequest="28">
+                                <StackLayout Orientation="Horizontal"
+                                             Padding="5,0"
+                                             Spacing="10">
+                                    <ffimg:CachedImage Source ="resource://Swibbl.Resources.Search.png"
+                                                   Aspect="AspectFit"
+                                                   xct:IconTintColorEffect.TintColor="{StaticResource Additional2}"
+                                                   HeightRequest="20"/>
+                                    <Label Text ="Search Salons &#x26; Services"
+                                       TextColor="{StaticResource Additional2}"
+                                       FontFamily="QB"
+                                       FontSize="Body"
+                                       VerticalTextAlignment="Center">
+                                    </Label>
+                                </StackLayout>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenSearchCommand}" NumberOfTapsRequired="1"/>
+                                </Frame.GestureRecognizers>
+                            </Frame>
+                            <CarouselView ItemsSource="{Binding CarouselAds}"
+                                          IndicatorView="indicatorView"
+                                          VerticalScrollBarVisibility="Never"
+                                          HeightRequest="200"
+                                          Position="{Binding Position}"
+                                          Margin="0">
+                                <CarouselView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Horizontal"
+                                                       SnapPointsAlignment="Center"
+                                                       SnapPointsType="MandatorySingle"/>
+                                </CarouselView.ItemsLayout>
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Frame Padding="1"
+                                               CornerRadius="2">
+                                        <ffimg:CachedImage Style="{StaticResource cacheimage}"
+                                                           Source="{Binding Imgurl}"
+                                                           x:DataType="category:Category"
+                                                           HeightRequest="200">
+                                            <ffimg:CachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource
+                                                                      AncestorType={x:Type viewmodel:MainPageModel}},
+                                                                      Path=SelectedServiceCommand}"
+                                                                      CommandParameter="{Binding Id}"/>
+                                            </ffimg:CachedImage.GestureRecognizers>
+                                        </ffimg:CachedImage>
+                                        </Frame>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                            <IndicatorView x:Name="indicatorView"
+                                       SelectedIndicatorColor="{StaticResource Primary}"
+                                       IndicatorColor="LightGray"
+                                       IndicatorSize="5"
+                                       HorizontalOptions="Center"
+                                       Padding="5"/>
+                            <StackLayout Margin="20">
+                                <StackLayout.Resources>
+                                    <Style TargetType="BoxView" ApplyToDerivedTypes="True">
+                                        <Setter Property="HeightRequest" Value="100"/>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                        <Setter Property="CornerRadius" Value="8"/>
+                                        <Setter Property="Margin" Value="5"/>
+                                        <Setter Property="VerticalOptions" Value="End"/>
+                                    </Style>
+                                    <Style TargetType="Label" x:Key="name" BasedOn="{StaticResource title}">
+                                        <Setter Property="VerticalOptions" Value="End"/>
+                                        <Setter Property="Padding" Value="15"/>
+                                        <Setter Property="TextColor" Value="{StaticResource SubPrimary}"/>
+                                    </Style>
+                                    <Style TargetType="Label" x:Key="fas" BasedOn="{StaticResource fas}">
+                                        <Setter Property="Text" Value="{x:Static awesome:FontAwesomeIcons.ChevronRight}"/>
+                                        <Setter Property="VerticalOptions" Value="End"/>
+                                        <Setter Property="HorizontalOptions" Value="End"/>
+                                        <Setter Property="Padding" Value="10"/>
+                                        <Setter Property="TextColor" Value="{StaticResource SubPrimary}"/>
+                                    </Style>
+                                </StackLayout.Resources>
+                                <Frame CornerRadius="8"
+                                       Padding="0"
+                                       HeightRequest="150">
+                                    <Grid>
+                                        <ffimg:CachedImage Style="{StaticResource cacheimage}"
+                                                        Source="{Binding Woman}"
+                                                       Aspect="AspectFill"/>
+                                        <BoxView BackgroundColor="{StaticResource PurpleShade2}">
+                                            <BoxView.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding WomandServicesCommand}"/>
+                                            </BoxView.GestureRecognizers>
+                                        </BoxView>
+                                        <Label Text="Salon for Women"
+                                               Style="{StaticResource name}"/>
+                                        <Label Style="{StaticResource fas}"/>
+                                    </Grid>
+                                    
+                                </Frame>
+                                <Frame CornerRadius="8"
+                                       Padding="0"
+                                       HeightRequest="150">
+                                    <Grid>
+                                        <ffimg:CachedImage Style="{StaticResource cacheimage}"
+                                                            Source="{Binding Man}"
+                                                            Aspect="AspectFill"/>
+
+
+                                        <BoxView BackgroundColor="{StaticResource PurpleShade1}">
+                                            <BoxView.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding ManServicesCommand}"/>
+                                            </BoxView.GestureRecognizers>
+                                        </BoxView>
+                                        <Label Text="Salon for Men"
+                                               Style="{StaticResource name}"/>
+                                        <Label Style="{StaticResource fas}"/>
+
+                                    </Grid>
+                                    
+                                </Frame>
+                            </StackLayout>
+
+                        </StackLayout>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10">
+                            <ffimg:CachedImage Style="{StaticResource cacheimage}"
+                                               Source="{Binding Imgurl}"
+                                               x:DataType="marketing:Ad"/>
+                        </StackLayout>
+                        </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+        </RefreshView>
+    </Grid>
+</ContentPage> 

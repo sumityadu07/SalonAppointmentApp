@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:SalonAppointmentApp.Pages"
+             xmlns:models="clr-namespace:SalonAppointmentApp.Models"
+             x:Class="SalonAppointmentApp.Pages.AppDetailPage"
+             x:DataType="pages:AppDetailPageModel">
+    <NavigationPage.TitleView>
+        <Label Text="About Swibbl"
+               Style="{StaticResource titletext}"/>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Swibbl Private Limited"
+                   Style="{StaticResource subTitle}"
+                   HorizontalTextAlignment="Center"
+                   Padding="5"/>
+            <CollectionView ItemsSource="{Binding Privacies}"
+                            Margin="10,2">
+                <CollectionView.Header>
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout.Resources>
+                            <Style TargetType="Label" ApplyToDerivedTypes="True" BasedOn="{StaticResource body}">
+                                <Setter Property="FontSize" Value="Caption"/>
+                            </Style>
+                        </StackLayout.Resources>
+                        <Label Text="{Binding AboutUs.Phone}"/>
+                        <Label Text="{Binding AboutUs.Email}"/>
+                        <Label Text="{Binding AboutUs.Address}"/>
+                    </StackLayout>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label Text="{Binding Title}"
+                               Style="{StaticResource title}"
+                               x:DataType="models:PrivacyPolicy"/>
+                            <Label Text="{Binding Body}"
+                                   Style="{StaticResource body}"
+                                   x:DataType="models:PrivacyPolicy"/>
+                        </StackLayout>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

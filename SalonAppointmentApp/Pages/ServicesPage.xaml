@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalonAppointmentApp.Pages.ServicesPage"
+             xmlns:viewmodel="clr-namespace:SalonAppointmentApp.Pages"
+             x:DataType="viewmodel:ServicesPageModel"
+             xmlns:ffimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:salon="clr-namespace:SalonAppointmentApp.Models.Salon"
+             >
+    <NavigationPage.TitleView>
+        <Label Text="Services"
+				Style="{StaticResource titletext}"/>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <Grid xct:StateLayout.AnimateStateChanges="False"
+              xct:StateLayout.CurrentState="{Binding State}">
+                <xct:StateLayout.StateViews>
+                    <xct:StateView StateKey="Loading"
+                                   Template="{StaticResource loading_state}"/>
+
+                </xct:StateLayout.StateViews>
+            <StackLayout>
+                <CollectionView ItemsSource="{Binding Services}"
+						        VerticalOptions="Start"
+						        ItemSizingStrategy="MeasureAllItems"
+                                BackgroundColor="{StaticResource SubSecondary}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="1"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="0,1"
+                                         x:DataType="salon:Service"
+                                         >
+                                <Frame Padding="10"
+                                       HeightRequest="180"
+                                       HasShadow="False">
+
+                                    <AbsoluteLayout >
+
+                                        <Label Text="{Binding Name}"
+                                               Style="{StaticResource title}"
+                                               FontSize="Large"/>
+                                            <Label VerticalTextAlignment="Center"
+                                                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                                                   AbsoluteLayout.LayoutBounds="0.1,0.4,200,50">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <FormattedString.Spans>
+                                                            <Span Text="{Binding Price,StringFormat='₹ {0}'}"
+                                                                  Style="{StaticResource body}"
+                                                                  FontSize="Small"/>
+                                                            <Span Text=" "/>
+                                                        <Span Text="{Binding Duration,StringFormat='  {0} Mins'}"
+                                                              Style="{StaticResource body}"
+                                                              TextColor="{StaticResource Primary}"/>
+                                                    </FormattedString.Spans>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        <Label Text="Get complete body honey waxing done in no minute"
+                                               AbsoluteLayout.LayoutBounds="0.1,0.8,200,50"
+                                               AbsoluteLayout.LayoutFlags="PositionProportional"
+                                               Style="{StaticResource body}"
+                                               TextColor="{StaticResource Additional2}"/>
+                                        <Frame Padding="0"
+                                               CornerRadius="5"
+                                               VerticalOptions="End"
+                                               AbsoluteLayout.LayoutFlags="PositionProportional"
+                                               AbsoluteLayout.LayoutBounds="1,0.7,120,100">
+                                            <ffimg:CachedImage Source="{Binding ImgUrl}"
+                                                               Style="{StaticResource cacheimage}"
+                                                               HeightRequest="80"
+                                                               />
+                                        </Frame>
+
+
+                                        <Frame BackgroundColor="White"
+                                               BorderColor="LightBlue"
+                                               CornerRadius="8"
+                                               Padding="2"
+                                               AbsoluteLayout.LayoutFlags="PositionProportional" 
+                                               AbsoluteLayout.LayoutBounds="0.92,0.95,75,28">
+                                            <Label HorizontalTextAlignment="Center"
+                                                   Style="{StaticResource subTitle}"
+                                                   TextColor="{StaticResource PurpleRed}"
+                                                   VerticalTextAlignment="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <FormattedString.Spans>
+                                                            <Span Text="Add"/>
+                                                            <Span Text=" +"/>
+                                                        </FormattedString.Spans>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type                                        viewmodel:ServicesPageModel}},Path=AddServiceCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                            </Frame.GestureRecognizers>
+                                        </Frame>
+                                        <Frame AbsoluteLayout.LayoutFlags="PositionProportional"
+                                               AbsoluteLayout.LayoutBounds="0.92,0.95,75,28"
+                                               Padding="0"
+                                               CornerRadius="5"
+                                               IsVisible="{Binding IsVisible}">
+                                            <StackLayout Orientation="Horizontal"
+                                                         BackgroundColor="Transparent"
+                                                         Spacing="8">
+                                                <StackLayout.Resources>
+                                                    <Style TargetType="Label" x:Key="label" BasedOn="{StaticResource subTitle}">
+                                                        <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
+                                                        <Setter Property="TextColor" Value="{StaticResource SubPrimary}"/>
+                                                        <Setter Property="VerticalTextAlignment" Value="Center"/>
+                                                        <Setter Property="FontSize" Value="Small"/>
+                                                        <Setter Property="Padding" Value="10,1"/>
+                                                    </Style>
+                                                </StackLayout.Resources>
+                                                <Label Text="-"
+                                                        Style="{StaticResource label}">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource
+                                                                   AncestorType={x:Type viewmodel:ServicesPageModel}},
+                                                                   Path=DecrementCommand}"
+                                                                  CommandParameter="{Binding .}"/>
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                                <Label Text="{Binding Quantity}"
+                                                       Style="{StaticResource subTitle}"
+                                                       VerticalTextAlignment="Center"/>
+                                                <Label Text="+"
+                                                       Style="{StaticResource label}">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource
+                                                                   AncestorType={x:Type viewmodel:ServicesPageModel}},
+                                                                   Path=IncrementCommand}"
+                                                                  CommandParameter="{Binding .}"/>
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                            </StackLayout>
+                                        </Frame>
+                                    </AbsoluteLayout>
+
+                            </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            <Frame VerticalOptions="EndAndExpand"
+                   Padding="12"
+                   Margin="10"
+                   CornerRadius="5"
+                   IsVisible="{Binding IsVisible}"
+                   BackgroundColor="{StaticResource SubPrimary}">
+                <StackLayout Orientation="Horizontal">
+                    <Label Padding="15,0"
+                           VerticalTextAlignment="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="{Binding Amt,StringFormat='₹{0}'}"
+                                          Style="{StaticResource body}"/>
+                                    <Span Text=" "/>
+                                    <Span Text="{Binding Duration,StringFormat='{0}Mins'}"
+                                          Style="{StaticResource body}"/>
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Button Text="Pick a slot"
+                            Command="{Binding OpenSlotCommand}"
+                            HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+            </Frame>
+            </StackLayout>
+        </Grid>
+  </ContentPage.Content>
+</ContentPage>

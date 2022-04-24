@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:viewmodel="clr-namespace:SalonAppointmentApp.Pages"
+			 x:Class="SalonAppointmentApp.Pages.AppointmentsPage"
+			 xmlns:fontawesome="clr-namespace:FontAwesome"
+			 xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:salon="clr-namespace:SalonAppointmentApp.Models.Salon"
+             x:DataType="viewmodel:AppointmentsPageModel">
+    <NavigationPage.TitleView>
+        <Label Text="Your Appointments"
+				Style="{StaticResource titletext}"/>
+    </NavigationPage.TitleView>
+    <RefreshView IsRefreshing="{Binding IsBusy}"
+                 Command="{Binding RefreshCommand}">
+    <Grid xct:StateLayout.CurrentState="{Binding State}">
+        <xct:StateLayout.StateViews>
+            <xct:StateView StateKey="Loading"
+                           Template="{StaticResource loading_state}"/>
+            <xct:StateView StateKey="Empty"
+                           Template="{StaticResource empty_state}"/>
+        </xct:StateLayout.StateViews>
+			<CollectionView ItemsSource="{Binding Appointments}"
+							SelectedItem="{Binding SelectedSalon}"
+							SelectionMode="Single"
+							Margin="10">
+				<CollectionView.ItemTemplate>
+					<DataTemplate>
+						<StackLayout x:DataType="salon:Appointment"
+									Padding="1,10">
+							<Frame HasShadow="False">
+								<StackLayout>
+									<Label Text="{Binding Name}"
+                                           Style="{StaticResource caption}"/>
+                                    <Frame BackgroundColor="WhiteSmoke"
+										   HasShadow="False">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding Services}"
+                                                   Style="{StaticResource body}"/>
+                                            <Label Text="{x:Static fontawesome:FontAwesomeIcons.ChevronRight}"
+												   FontFamily="FAS"
+												   TextColor="Gray"
+												   FontSize="Small"
+												   VerticalTextAlignment="Center"
+												   HorizontalOptions="EndAndExpand"/>
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+							</Frame>
+						</StackLayout>
+					</DataTemplate>
+				</CollectionView.ItemTemplate>
+			</CollectionView>
+			<ActivityIndicator Style="{StaticResource indicator}"
+								IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"/>
+		</Grid>
+    </RefreshView>
+</ContentPage>

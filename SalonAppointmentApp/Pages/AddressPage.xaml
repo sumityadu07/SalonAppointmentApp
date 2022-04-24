@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalonAppointmentApp.Pages.AddressPage"
+             x:DataType="pages:AddressPageModel"
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView">
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter TargetName="checkbox"
+                                        Property="CheckBox.IsChecked"
+                                        Value="False"
+                                        />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter TargetName="checkbox"
+                                        Property="CheckBox.IsChecked"
+                                        Value="True"/>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <Shell.TitleView>
+        <Label Text="SAVED ADDRESS"
+				Style="{StaticResource titletext}"/>
+    </Shell.TitleView>
+    <ContentPage.Content>
+        <Grid 
+              RowDefinitions="200,80,auto,50">
+            <Label Text="Select a Address"
+                   Style="{StaticResource title}"
+                   HorizontalOptions="Center"
+                   Grid.ColumnSpan="2"/>
+            
+            <pancakeview:PancakeView Grid.ColumnSpan="2"
+                                     VerticalOptions="Center"
+                                     Padding="15"
+                                     Grid.Row="1"
+                                     Margin="10"
+                                     CornerRadius="0,20,20,0"
+                                     BackgroundColor="{StaticResource SubSecondary}">
+                <Label HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="{x:Static fontawesome:FontAwesomeIcons.Plus}"
+                                       FontFamily="FAS"
+                                       FontSize="Body"
+                                       TextColor="{StaticResource Primary}"/>
+                                <Span Text="   "/>
+                                <Span Text="Add new Address"
+                                      TextColor="{StaticResource Primary}"
+                                      Style="{StaticResource body}"
+                                      FontSize="Medium"
+                                      FontFamily="CDB"/>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <pancakeview:PancakeView.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NewAddressCommand}"/>
+                </pancakeview:PancakeView.GestureRecognizers>
+            </pancakeview:PancakeView>
+
+            <CollectionView ItemsSource="{Binding Addresses}"
+                            SelectedItem="{Binding SelectedAddress,Mode=TwoWay}"
+                            SelectionMode="Single"
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10"
+                                    BackgroundColor="{StaticResource SubPrimary}">
+                                <StackLayout Orientation="Horizontal">
+                                    <CheckBox IsEnabled="False"
+                                              Color="{StaticResource Primary}"
+                                              x:Name="checkbox"/>
+                                    <Label Text="{Binding Location}"
+                                           x:DataType="user:Address"
+                                           VerticalOptions="Center"
+                                           Style="{StaticResource body}"
+                                           FontSize="Small"
+                                           Grid.Column="1"/>
+                                </StackLayout>
+                        </StackLayout>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Text="Done"
+                    Command="{Binding DoneCommand}"
+                    VerticalOptions="End"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="3"
+                    Margin="10,2"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

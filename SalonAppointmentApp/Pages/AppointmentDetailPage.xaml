@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:models="clr-namespace:SalonAppointmentApp.Models"
+			 xmlns:viewmodel="clr-namespace:SalonAppointmentApp.Pages"
+			 x:Class="SalonAppointmentApp.Pages.AppointmentDetailPage"
+			 xmlns:fontawesome="clr-namespace:FontAwesome"
+			 BackgroundColor="WhiteSmoke">
+    <StackLayout Padding="10">
+        <Frame HasShadow="False"
+				CornerRadius="0">
+            <StackLayout>
+                <Label Text="{Binding Appointment.Date}"/>
+                <Frame BackgroundColor="WhiteSmoke"
+					   HasShadow="False">
+                    <StackLayout>
+                        <Label Text="{Binding Appointment.Services}"
+									FontSize="15"
+									FontFamily="NSB"
+									TextColor="Black"/>
+                        <Label Text="{Binding Appointment.Outlet,StringFormat='Salon : {0}'}"/>
+
+                    </StackLayout>
+                </Frame>
+
+            </StackLayout>
+        </Frame>
+
+        <Button Text="Book again"
+				Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MenuPageModel}},Path=CancelCommand}"
+				CommandParameter="{Binding .}"
+                HeightRequest="34"
+				Padding="2"
+                HorizontalOptions="EndAndExpand"/>
+        <Label Text="{Binding Appointment.Status}"
+               HorizontalTextAlignment="Start"
+               BackgroundColor="{Binding StatusColor}"
+               Padding="10"
+               TextColor="White"
+               FontSize="Small"/>
+        <Label Text="Price Details"
+               FontFamily="NSBI"
+               FontSize="Body"
+               TextColor="Green"
+               Padding="10"/>
+        <Frame BackgroundColor="White"
+			   HasShadow="False"
+               HeightRequest="50">
+            <StackLayout VerticalOptions="CenterAndExpand"
+                         Orientation="Horizontal">
+                <Label Text="{Binding Appointment.PaymentMethod,StringFormat='Payment made using {0}'}"/>
+                <Label Text="{Binding Appointment.Charge,StringFormat='₹ {0}'}"
+                   FontSize="Small"
+                   FontFamily="NSB"
+                   HorizontalOptions="EndAndExpand"
+                       TextColor="Green"/>
+
+            </StackLayout>
+        </Frame>
+        <Label Text="Refund Details"
+               FontFamily="NSBI"
+               FontSize="Body"
+               TextColor="Green"
+               Padding="10"/>
+        <Frame BackgroundColor="White"
+			   HasShadow="False"
+               HeightRequest="50">
+            <StackLayout VerticalOptions="CenterAndExpand"
+                         Orientation="Horizontal">
+                <Label Text="{Binding Appointment.PaymentMethod,StringFormat='Amount credited to {0}'}"/>
+                <Label Text="{Binding Appointment.Charge,StringFormat='₹ {0}'}"
+                       FontSize="Small"
+                       FontFamily="NSB"
+                       HorizontalOptions="EndAndExpand"
+                       TextColor="Green"/>
+
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentPage>

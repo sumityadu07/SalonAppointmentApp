@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="SalonAppointmentApp.Pages.SlotPage" 
+			 xmlns:fontAwesome="clr-namespace:FontAwesome"
+             xmlns:loading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:viewmodel="clr-namespace:SalonAppointmentApp.Pages" xmlns:salon="clr-namespace:SalonAppointmentApp.Models.Salon"
+             x:DataType="viewmodel:SlotPageModel"
+             >
+    <ContentPage.Content>
+
+        <StackLayout Padding="10,50,0,0">
+            <Label Text="Select your preferred slot"
+				   Style="{StaticResource title}"
+                   FontFamily="NSBI"/>
+            <StackLayout Padding="0,4"
+                         Orientation="Horizontal"
+                         Spacing="10"
+                         HorizontalOptions="StartAndExpand">
+                <StackLayout.Resources>
+                    <Style TargetType="Button" ApplyToDerivedTypes="True" BasedOn="{StaticResource bicon}">
+                        <Setter Property="WidthRequest" Value="50"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </StackLayout.Resources>
+            <Button Text="{Binding Dates.Date1}"
+					Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SlotPageModel}},Path=GetSlot}"
+                    CommandParameter="{Binding Dates.Date1}"/>
+            <Button Text="{Binding Dates.Date2}"
+					Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SlotPageModel}},Path=GetSlot}"
+                    CommandParameter="{Binding Dates.Date2}"/>
+            <Button Text="{Binding Dates.Date3}"
+					Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SlotPageModel}},Path=GetSlot}"
+                    CommandParameter="{Binding Dates.Date3}"/>
+            <Button Text="{Binding Dates.Date4}"
+					Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SlotPageModel}},Path=GetSlot}"
+                    CommandParameter="{Binding Dates.Date4}"/>
+            </StackLayout>
+            <Grid>
+                <CollectionView SelectionMode="Single"
+								BackgroundColor="Transparent"
+                                Margin="10"
+                                ItemsSource="{Binding Time}"
+                                SelectedItem="{Binding SelectedSlot}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout HorizontalItemSpacing="10"
+                                         VerticalItemSpacing="15"
+                                         Span="3"
+                                         Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.Header>
+                        <Label Style="{StaticResource body}"
+								TextColor="#6422b8"
+								Padding="5,0">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="{Binding Date}"></Span>
+                                        <Span Text=" "></Span>
+                                        <Span Text="{Binding SelectedSlot}"></Span>
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="2">
+                                <Frame Padding="0"
+									   HeightRequest="40"
+                                       HasShadow="False"
+                                       BorderColor="{StaticResource Additional2}">
+                                        <Label Text="{Binding Time}"
+												HorizontalTextAlignment="Center"
+												VerticalTextAlignment="Center"
+												TextColor="{StaticResource Primary}"
+												Style="{StaticResource body}"
+                                               x:DataType="salon:Slot"/>
+                                </Frame>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <ActivityIndicator Color="{StaticResource Primary}"
+										   IsRunning="{Binding IsBusy}"
+										   HorizontalOptions="CenterAndExpand"
+										   VerticalOptions="Center"/>
+            </Grid>
+            <Grid VerticalOptions="End"
+                   Margin="10"
+                  HeightRequest="80">
+
+                <Button Text="Done"
+                        Command="{Binding DoneCommand}"/>
+                <Button Text="Sign In to Continue"
+                        Command="{Binding LoginCommand}"
+                        IsVisible="{Binding IsVisible}"/>
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

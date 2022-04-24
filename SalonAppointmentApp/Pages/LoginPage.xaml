@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:pages="clr-namespace:SalonAppointmentApp.Pages"
+			 xmlns:swibbl="clr-namespace:SalonAppointmentApp"
+			 x:Class="SalonAppointmentApp.Pages.LoginPage"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:ffimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
+	<!--6c63ff
+			f8a4d8
+	dark mode Background="#192734"
+	red color ca1f3d>-->
+	<!-- cream TextColor="#9b8884"-->
+	<!-- gray shade BackgroundColor="#fdb8b6"-->
+    <!-- purple up BackgroundColor="#B3A5D8"-->
+    <!-- purple down BackgroundColor="##080738"-->
+    <Grid x:DataType="pages:LoginPageModel"
+          RowDefinitions="300,100,280">
+        <ffimg:CachedImage Source="splash_background"
+                           HorizontalOptions="CenterAndExpand"
+                           VerticalOptions="StartAndExpand"
+                           Margin="40"/>
+        <StackLayout VerticalOptions="Center"
+				 HorizontalOptions="CenterAndExpand"
+				 WidthRequest="275">
+            <Label Text="Sign In"
+               Style="{StaticResource title}"
+               FontSize="Title"
+               Padding="10"/>
+            <Grid>
+                <StackLayout>
+                    <Frame Padding="0"
+						CornerRadius="5">
+                        <StackLayout Orientation="Horizontal"
+										Spacing="0">
+                            <Image Source="icons8india96"
+									HeightRequest="30"
+									Margin="8,0,-4,0"/>
+                            <Label Text="+91"
+									TextColor="Black"
+									FontSize="18"
+									Padding="8,0,4,0"
+									HorizontalOptions="Center"
+									VerticalOptions="Center"/>
+                            <swibbl:CustomEntry Placeholder="Phone"
+										Text="{Binding Phone}"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                <Frame BackgroundColor="{StaticResource SubPrimary}"
+						Padding="0"
+						IsVisible="{Binding CodeSent}"
+						HorizontalOptions="FillAndExpand"
+						CornerRadius="8">
+
+                    <swibbl:CustomEntry Placeholder="OTP"
+								HorizontalTextAlignment="Center"
+								Text="{Binding Code}"/>
+
+                </Frame>
+            </Grid>
+            <Grid>
+                <Button Text="{Binding ButtonText}"
+					Command="{Binding PostLoginCommand}"
+                    WidthRequest="100"/>
+                <Frame WidthRequest="100"
+					BackgroundColor="{StaticResource Primary}"
+					CornerRadius="8"
+					IsVisible="{Binding IsBusy}">
+                    <ActivityIndicator IsRunning="True"
+									Color="{StaticResource SubPrimary}"
+									HeightRequest="20"
+									Margin="-10"/>
+                </Frame>
+            </Grid>
+        </StackLayout>
+        <Button Text="Skip"
+                Command="{Binding SkipCommand}"
+                CornerRadius="20"
+                Style="{StaticResource bicon}"
+                VerticalOptions="EndAndExpand"
+                HeightRequest="38"
+                Grid.Row="2"
+                HorizontalOptions="End"
+                Margin="10"/>
+    </Grid>
+</ContentPage>

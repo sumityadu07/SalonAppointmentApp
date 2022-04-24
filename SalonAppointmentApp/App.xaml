@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 xmlns:fontAwesome="clr-namespace:FontAwesome"
+			 x:Class="SalonAppointmentApp.App"
+             xmlns:ffimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:viewmodel="clr-namespace:SalonAppointmentApp.Pages"
+             xmlns:swibbl="clr-namespace:SalonAppointmentApp"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:ffsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms">
+	<Application.Resources>
+        <Color x:Key="Primary">#6422b8</Color> 
+        <Color x:Key="SubPrimary">#ffff</Color>
+        <Color x:Key="Secondary">#192734</Color>
+        <Color x:Key="SubSecondary">whitesmoke</Color>
+        <Color x:Key="Additional">MediumPurple</Color>
+        <Color x:Key="Additional2">silver</Color>
+        <Color x:Key="PurpleShade1">#9795ef</Color>
+        <Color x:Key="PurpleShade2">#f9c5d1</Color>
+        <Color x:Key="PurplePink">#b91372</Color>
+        <Color x:Key="PurpleRed">#6B0F1A</Color>
+        
+        <Style TargetType="ffimg:CachedImage" x:Key="cacheimage">
+            <Setter Property="ErrorPlaceholder" Value="ojects"/>
+            <Setter Property="DownsampleToViewSize" Value="True"/>
+            <Setter Property="Aspect" Value="AspectFit"/>
+            <Setter Property="LoadingPriority" Value="Normal"/>
+        </Style>
+        <ToolbarItem Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageModel}},Path=CartCommand}" x:Key="toolbar">
+            <ToolbarItem.IconImageSource>
+                <FontImageSource Glyph="{x:Static fontAwesome:FontAwesomeIcons.ShoppingBag}"
+                                  Size="Title"
+                                  FontFamily="FAS"
+                                  Color="Ivory"/>
+            </ToolbarItem.IconImageSource>
+        </ToolbarItem>
+
+        <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="NavigationPage.IconColor" Value="Black"/>
+        </Style>
+        <Style TargetType="Button" ApplyToDerivedTypes="True">
+            <!--BackgroundColor="#ffba00"-->
+            <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
+            <Setter Property="TextColor" Value="{StaticResource SubPrimary}"/>
+            <Setter Property="TextTransform" Value="None"/>
+            <Setter Property="BorderWidth" Value="1"/>
+            <Setter Property="FontFamily" Value="OSB"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="HeightRequest" Value="45"/>
+        </Style>
+        <Style TargetType="Button" x:Key="quantity_button">
+            <Setter Property="FontSize" Value="Title"/>
+            <Setter Property="Padding" Value="-2"/>
+            <Setter Property="FontFamily" Value="QB"/>
+            <Setter Property="WidthRequest" Value="30"/>
+            <Setter Property="CornerRadius" Value="3"/>
+            <Setter Property="TextColor" Value="{StaticResource SubPrimary}"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="1,1">
+                        <GradientStop Color="#9795ef"
+                          Offset="0.1" />
+
+                        <GradientStop Color="#f9c5d1"
+                          Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="bicon">
+            <!--BackgroundColor="#ffba00"-->
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+            <Setter Property="TextTransform" Value="None"/>
+            <Setter Property="BorderWidth" Value="1"/>
+            <Setter Property="BorderColor" Value="{StaticResource Secondary}"/>
+            <Setter Property="FontFamily" Value="QB"/>
+            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            <Setter Property="HeightRequest" Value="40"/>
+        </Style>
+        <Style TargetType="Button" x:Key="wishlistButton">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="FontFamily"
+                                        Value="FAR" />
+                                <Setter Property="TextColor"
+                                        Value="Black" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="FontFamily"
+                                        Value="FAS" />
+                                <Setter Property="TextColor"
+                                        Value="DeepPink" />
+                            </VisualState.Setters>
+                        </VisualState>
+
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="FontSize" Value="Title"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="Text" Value="{x:Static fontAwesome:FontAwesomeIcons.Heart}"/>
+            <Setter Property="BorderColor" Value="{StaticResource Secondary}"/>
+            <Setter Property="WidthRequest" Value="50"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="CornerRadius" Value="50"/>
+            <Setter Property="Padding" Value="-5"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="phoneEntry">
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="FontFamily" Value="OM"/>
+            <Setter Property="WidthRequest" Value="172"/>
+            <Setter Property="Keyboard" Value="Numeric"/>
+            <Setter Property="PlaceholderColor" Value="WhiteSmoke"/>
+        </Style>
+        <Style TargetType="Label" x:Key="title">
+            <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+            <Setter Property="FontFamily" Value="QB"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="Medium"/>
+        </Style>
+        <Style TargetType="Label" x:Key="titletext">
+            <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+            <Setter Property="FontFamily" Value="OSB"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="Medium"/>
+        </Style>
+        <Style TargetType="Label" x:Key="fas">
+            <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+            <Setter Property="FontFamily" Value="FAS"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="Medium"/>
+        </Style>
+        <Style TargetType="Label" x:Key="subTitle">
+            <Setter Property="FontFamily" Value="OSB"/>
+            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+        </Style>
+        <Style TargetType="Label" x:Key="body">
+            <Setter Property="FontFamily" Value="OM"/>
+            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+        </Style>
+        <Style TargetType="Label" x:Key="caption">
+            <Setter Property="FontFamily" Value="OR"/>
+            <Setter Property="FontSize" Value="Caption"/>
+            <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+        </Style>
+        <Style TargetType="Label" x:Key="invalid_label">
+            <Setter Property="FontFamily" Value="OM"/>
+            <Setter Property="FontSize" Value="Caption"/>
+            <Setter Property="TextColor" Value="Red"/>
+            <Setter Property="Text" Value="Check the given number"/>
+        </Style>
+        <Style TargetType="BoxView" x:Key="box">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="1,1"
+										EndPoint="1,0">
+                        <GradientStop Color="{StaticResource Secondary}"
+									 Offset="0.0"/>
+                        <GradientStop Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Entry" ApplyToDerivedTypes="True">
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="FontFamily" Value="OM"/>
+            <Setter Property="WidthRequest" Value="172"/>
+            <Setter Property="Keyboard" Value="Numeric"/>
+            <Setter Property="PlaceholderColor" Value="WhiteSmoke"/>
+        </Style>
+        <Style TargetType="ActivityIndicator" x:Key="indicator">
+            <Setter Property="Color" Value="{StaticResource Primary}"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            <Setter Property="WidthRequest" Value="50"/>
+        </Style>
+        
+        <!--  CONVERTERS  -->
+        <xct:IntToBoolConverter x:Key="CountToBoolConverter" />
+        <xct:InvertedBoolConverter x:Key="InverseBoolConverter" />
+        <xct:TextCaseConverter x:Key="ToUpperConverter" Type="Upper" />
+        <xct:IsNotNullOrEmptyConverter x:Key="StringNotNullOrEmptyBoolConverter" />
+        <xct:IsNullOrEmptyConverter x:Key="StringNullOrEmptyBoolConverter" />
+        <xct:ItemTappedEventArgsConverter x:Key="ItemTappedEventArgsConverter" />
+        <xct:ListIsNullOrEmptyConverter x:Key="ListIsNullOrEmptyConverter" />
+        <xct:ListIsNotNullOrEmptyConverter x:Key="ListIsNotNullOrEmptyConverter" />
+        
+        <!--State Layout-->
+        <DataTemplate x:Key="loading_state">
+            <ActivityIndicator Style="{StaticResource indicator}"
+                               IsRunning="True"/>
+        </DataTemplate>
+        <DataTemplate x:Key="empty_state">
+            <StackLayout VerticalOptions="CenterAndExpand"
+                         HorizontalOptions="CenterAndExpand">
+            <ffsvg:SvgCachedImage Source="resource://Swibbl.Resources.empty.svg"/>
+                <Label Text="Cart is Empty"
+                       Style="{StaticResource title}"/>
+            </StackLayout>
+        </DataTemplate>
+        <DataTemplate x:Key="error_state">
+            <ffsvg:SvgCachedImage Source="resource://Swibbl.Resources.error.svg"
+                                  HorizontalOptions="CenterAndExpand"
+                                  VerticalOptions="CenterAndExpand"
+                                  Margin="40"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="offline_state">
+            <Grid VerticalOptions="CenterAndExpand"
+                  >
+                <Label Text="You are Currently Offline"
+                       Style="{StaticResource title}"
+                       HorizontalOptions="CenterAndExpand"
+                       HorizontalTextAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+        <ContentView x:Name="logintab">
+            <StackLayout>
+            <Grid>
+                 <StackLayout>
+                    <Frame Padding="0"
+						CornerRadius="5">
+                        <StackLayout Orientation="Horizontal"
+										Spacing="0">
+                            <Image Source="icons8india96"
+									HeightRequest="30"
+									Margin="8,0,-4,0"/>
+                            <Label Text="+91"
+									TextColor="Black"
+									FontSize="18"
+									Padding="8,0,4,0"
+									HorizontalOptions="Center"
+									VerticalOptions="Center"/>
+                            <swibbl:CustomEntry Placeholder="Phone"
+										Text="{Binding Phone}"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+                <Frame BackgroundColor="{StaticResource SubPrimary}"
+						Padding="0"
+						IsVisible="{Binding CodeSent}"
+						HorizontalOptions="FillAndExpand"
+						CornerRadius="8">
+
+                    <swibbl:CustomEntry Placeholder="OTP"
+								HorizontalTextAlignment="Center"
+								Text="{Binding Code}"/>
+
+                </Frame>
+            </Grid> 
+            <Grid>
+                <Button Text="{Binding ButtonText}"
+					Command="{Binding PostLoginCommand}"
+                    WidthRequest="100"/>
+                <Frame WidthRequest="100"
+					BackgroundColor="{StaticResource Primary}"
+					CornerRadius="8"
+					IsVisible="{Binding IsBusy}">
+                    <ActivityIndicator IsRunning="True"
+									Color="{StaticResource SubPrimary}"
+									HeightRequest="20"
+									Margin="-10"/>
+                </Frame>
+            </Grid>
+            </StackLayout>
+        </ContentView>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalonAppointmentApp.Pages.SummaryPage"
+             x:DataType="pages:SummaryPageModel"
+             BackgroundColor="{StaticResource SubSecondary}"
+             xmlns:ffimg="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             >
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout.Resources>
+                <Style TargetType="Label" ApplyToDerivedTypes="True" BasedOn="{StaticResource body}">
+                    <Setter Property="Padding" Value="10"/>
+                </Style>
+            </StackLayout.Resources>
+            <CollectionView ItemsSource="{Binding Cart.Services}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="0,1">
+                        <AbsoluteLayout x:DataType="salon:Service"
+                                        BackgroundColor="{StaticResource SubPrimary}"
+                                        Padding="10">
+                            <Label Text="{Binding Name}"
+                                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                                   AbsoluteLayout.LayoutBounds="0,0.5,200,65"/>
+                            <Label Text="{Binding Duration,StringFormat='Duration : {0} Mins'}"
+                                   AbsoluteLayout.LayoutFlags="PositionProportional"
+                                   AbsoluteLayout.LayoutBounds="0,0.9,150,40"/>
+                            <ffimg:CachedImage Source="{Binding ImgUrl}"
+                                               AbsoluteLayout.LayoutFlags="PositionProportional"
+                                               AbsoluteLayout.LayoutBounds="1,0.5,100,60"/>
+                            <Frame AbsoluteLayout.LayoutFlags="PositionProportional"
+                                   AbsoluteLayout.LayoutBounds="0.95,1.2,70,25"
+                                   Padding="0"
+                                   CornerRadius="5">
+                                <StackLayout Orientation="Horizontal"
+                                             BackgroundColor="Transparent"
+                                             Spacing="5">
+                                    <StackLayout.Resources>
+                                        <Style TargetType="Label" x:Key="label" BasedOn="{StaticResource subTitle}">
+                                            <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
+                                            <Setter Property="TextColor" Value="{StaticResource SubPrimary}"/>
+                                            <Setter Property="FontSize" Value="Small"/>
+                                            <Setter Property="Padding" Value="10,1"/>
+                                        </Style>
+                                    </StackLayout.Resources>
+                                    <Label Text="-"
+                                           Style="{StaticResource label}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource
+                                                                   AncestorType={x:Type pages:SummaryPageModel}},
+                                                                   Path=DecrementCommand}"
+                                                                  CommandParameter="{Binding .}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label Text="{Binding Quantity}"
+                                           Style="{StaticResource subTitle}"
+                                           VerticalTextAlignment="Center"/>
+                                    <Label Text="+"
+                                           Style="{StaticResource label}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource
+                                                                   AncestorType={x:Type pages:SummaryPageModel}},
+                                                                   Path=IncrementCommand}"
+                                                                  CommandParameter="{Binding .}"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </StackLayout>
+                            </Frame>
+                        </AbsoluteLayout>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.Footer>
+                    <Frame  Margin="0"
+                            HeightRequest="250"
+                            BackgroundColor="{StaticResource SubSecondary}"
+                            IsVisible="{Binding Cart.Services,Converter={StaticResource ListIsNotNullOrEmptyConverter}}">
+                        <Grid Padding="25,15"
+                              RowDefinitions="40,1,20,20,20,20,1,20,20,40">
+                            <Grid.Resources>
+                                <Style TargetType="Label" BasedOn="{StaticResource body}" ApplyToDerivedTypes="True">
+                                    <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+                                    <Setter Property="FontSize" Value="Small"/>
+                                </Style>
+                                <Style TargetType="Label" BasedOn="{StaticResource body}" x:Key="rightlabel">
+                                    <Setter Property="TextColor" Value="{StaticResource Secondary}"/>
+                                    <Setter Property="FontSize" Value="Small"/>
+                                    <Setter Property="Grid.Column" Value="1"/>
+                                    <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
+                                </Style>
+                            </Grid.Resources>
+                            
+                            <Label Text="Payment Details"
+                                    Style="{StaticResource subTitle}"/>
+                            <Line BackgroundColor="{StaticResource PurpleShade2}"
+                                  HeightRequest="1"
+                                  HorizontalOptions="FillAndExpand"
+                                  Grid.Row="1"
+                                  Grid.ColumnSpan="2"/>
+
+                            <Label Text="Cart total"
+                                   Grid.Row="2"/>
+                            <Label Text="{Binding Total,StringFormat='₹{0}'}"
+                                   Style="{StaticResource rightlabel}"
+                                   Grid.Row="2"/>
+                            <Label Text="Discount"
+                                   Grid.Row="3"/>
+                            <Label Text="{Binding Savings,StringFormat='- ₹{0}'}"
+                                   Style="{StaticResource rightlabel}"
+                                   TextColor="Green"
+                                   Grid.Row="3"/>
+                            <Label Text="Subtotal"
+                                   Grid.Row="4"/>
+                            <Label Text="{Binding SubTotal,StringFormat='₹{0}'}"
+                                   Style="{StaticResource rightlabel}"
+                                   Grid.Row="4"/>
+                            <Label Text="Convenience Fee"
+                                   Grid.Row="5"/>
+                            <Label Text="{Binding ConvenienceFee,StringFormat='+ ₹{0}'}"
+                                   Style="{StaticResource rightlabel}"
+                                   Grid.Row="5"/>
+                            <Line BackgroundColor="{StaticResource Additional2}"
+                                  HeightRequest="1"
+                                  HorizontalOptions="FillAndExpand"
+                                  Grid.Row="6"
+                                  Grid.ColumnSpan="2"/>
+                            <Label Text="Total"
+                                   Style="{StaticResource subTitle}"
+                                   Grid.Row="7"/>
+                            <Label Text="{Binding AllTotal,StringFormat='₹{0}'}"
+                                   Style="{StaticResource rightlabel}"
+                                   FontSize="14"
+                                   Grid.Row="7"/>
+                            <Label Text="{Binding Savings,StringFormat='Your savings  ₹{0}'}"
+                                   VerticalOptions="End"
+                                   Grid.Row="8"
+                                   Style="{StaticResource rightlabel}"/>
+                            <Button Text="Book Appointment"
+                                    Command="{Binding OrderCommand}"
+                                    Padding="10"
+                                    Grid.Row="9"
+                                    Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </Frame>
+                </CollectionView.Footer>
+            </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
